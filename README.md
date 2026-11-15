@@ -75,6 +75,7 @@ GitHub Pages (бесплатно), из ветки `main`, корень. Все 
 - `index.html` — сама страница сайта.
 - `assets/css/style.css` — оформление; `assets/js/main.js` — меню; `assets/fonts/` — шрифты (Cormorant, Manrope, лицензия OFL); `assets/img/` — логотип, фото, обложки роликов (`covers/<номер ролика>.webp`).
 - `privacy.html` — политика конфиденциальности.
+- `googlea7ce5f695ad46b50.html` — файл подтверждения для Google Search Console. Не удалять и не менять: без него Google перестанет считать Катю владельцем сайта.
 - `da/index.html`, `da/privacy.html`, `sitemap.xml`, `robots.txt` — создаются сборкой, руками не править.
 - `assets/i18n/da.json` — датский перевод.
 - `.проект/инструменты/sborka.py` — сборка датской страницы; `.проект/инструменты/rolik-glavnogo-ekrana.py` — установка ролика главного экрана (нужен ffmpeg).
