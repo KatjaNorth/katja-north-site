@@ -8,7 +8,7 @@
 import json, pathlib, re, sys
 
 # ---------- НАСТРОЙКИ ----------
-BASE = 'https://katjanorth.github.io/katja-north-site/'    # адрес сайта, со слэшем в конце
+BASE = 'https://katjanorth.com/'    # адрес сайта, со слэшем в конце
 LANG1, NAME1 = 'en', 'English'      # основной язык: код (как в <html lang="…">) и название для подписи кнопки
 LANG2, NAME2 = 'da', 'Dansk'        # второй язык: код = имя папки и файла перевода assets/i18n/<код>.json
 LOCALE2 = 'da_DK'                   # второй язык для превью в соцсетях: язык_СТРАНА
