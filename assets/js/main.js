@@ -79,6 +79,26 @@
     else if (portrait.addListener) portrait.addListener(pick);
   }
 
+  /* ---------- Карточки услуг: «пример» подсвечивает ролик, «спросить» готовит форму ---------- */
+  var askLead = { en: 'I\u2019m interested in: ', da: 'Jeg er interesseret i: ' };
+  var lastAsk = '';
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest('.card-link');
+    if (!a) return;
+    if (a.hasAttribute('data-ask')) {
+      var msg = document.getElementById('f-message');
+      var title = a.closest('article').querySelector('h3').textContent.trim();
+      var line = askLead[lang] + title + '.\n';
+      if (msg.value.trim() === '' || msg.value === lastAsk) { msg.value = line; lastAsk = line; }
+      document.getElementById('f-subject').value = 'Project';
+      return;
+    }
+    var target = document.getElementById(a.getAttribute('href').slice(1));
+    if (!target) return;
+    target.classList.add('is-target');
+    setTimeout(function () { target.classList.remove('is-target'); }, 2600);
+  });
+
   /* ---------- Форма ---------- */
   var form = document.getElementById('contact-form');
   var status = document.getElementById('form-status');
