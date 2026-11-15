@@ -73,4 +73,3 @@ GitHub Pages (бесплатно), из ветки `claude/stoic-ritchie-tv80d5`
 - `.проект/MEMORY.md` — память проекта.
 
 ## Открытые вопросы
-- Перед финалом убрать `<meta name="robots" content="noindex">` из `index.html`.
