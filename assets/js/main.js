@@ -150,7 +150,11 @@
         form.reset();
         say('ok', UI[lang].ok);
       })
-      .catch(function () { say('err', UI[lang].err); })
+      .catch(function (err) {
+        // Сеть или блокировщик не дали отправить в фоне — отправляем обычным способом (откроется страница Formspree).
+        if (err instanceof TypeError) { try { HTMLFormElement.prototype.submit.call(form); return; } catch (e) {} }
+        say('err', UI[lang].err);
+      })
       .then(function () { send.disabled = false; });
   });
 
