@@ -4,17 +4,18 @@
   'use strict';
 
   var UI = {
-    en: { play: 'Play video: ', menu: 'Menu', sending: 'Sending…',
+    en: { play: 'Play video: ', menu: 'Menu', sending: 'Sending…', ask: 'I\u2019m interested in: ',
           ok: 'Thank you — your message has been sent.',
           err: 'Something went wrong. Please try again or write to me on LinkedIn.',
           req: 'Please fill in your name, a valid e-mail and a message.' },
-    da: { play: 'Afspil video: ', menu: 'Menu', sending: 'Sender…',
+    da: { play: 'Afspil video: ', menu: 'Menu', sending: 'Sender…', ask: 'Jeg er interesseret i: ',
           ok: 'Tak – din besked er sendt.',
           err: 'Noget gik galt. Prøv igen, eller skriv til mig på LinkedIn.',
           req: 'Udfyld venligst navn, en gyldig e-mail og en besked.' }
   };
 
-  var lang = document.documentElement.lang === 'da' ? 'da' : 'en';
+  // Язык страницы берётся из <html lang="…">; если для него нет строк выше — используется первый язык в списке.
+  var lang = UI[document.documentElement.lang] ? document.documentElement.lang : Object.keys(UI)[0];
 
   /* ---------- Меню ---------- */
   var btn = document.getElementById('menu-btn');
@@ -80,7 +81,6 @@
   }
 
   /* ---------- Карточки услуг: «пример» подсвечивает ролик, «спросить» готовит форму ---------- */
-  var askLead = { en: 'I\u2019m interested in: ', da: 'Jeg er interesseret i: ' };
   var lastAsk = '';
   document.addEventListener('click', function (e) {
     var a = e.target.closest('.card-link');
@@ -88,7 +88,7 @@
     if (a.hasAttribute('data-ask')) {
       var msg = document.getElementById('f-message');
       var title = a.closest('article').querySelector('h3').textContent.trim();
-      var line = askLead[lang] + title + '.\n';
+      var line = UI[lang].ask + title + '.\n';
       if (msg.value.trim() === '' || msg.value === lastAsk) { msg.value = line; lastAsk = line; }
       document.getElementById('f-subject').value = 'Project';
       return;

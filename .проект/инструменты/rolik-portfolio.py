@@ -41,7 +41,9 @@ left, top = (img.width - w) // 2, (img.height - h) // 2
 out = pathlib.Path(f'assets/img/covers/{vid}.webp')
 img.crop((left, top, left + w, top + h)).save(out, quality=78, method=6)
 
-path = pathlib.Path('assets/i18n/da.json')
+files = sorted(pathlib.Path('assets/i18n').glob('*.json'))        # файл перевода второго языка
+if len(files) != 1: fail('в assets/i18n должен быть ровно один файл перевода')
+path = files[0]
 da = json.loads(path.read_text(encoding='utf-8'))
 html = pathlib.Path('index.html').read_text(encoding='utf-8')
 old = [m.group(1) for m in re.finditer(r'data-yt="' + vid + r'"(?:(?!</figure>).)*?<span data-i18n="(cap\.\w+)"', html, re.S)]
@@ -55,7 +57,7 @@ da[key] = da_text
 path.write_text(json.dumps(da, ensure_ascii=False, indent=1), encoding='utf-8')
 
 esc = lambda t: t.replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;').replace('"', '&quot;')
-print(f'Обложка: {out} ({out.stat().st_size // 1024} КБ).  Датское описание записано в da.json, ключ {key}.')
+print(f'Обложка: {out} ({out.stat().st_size // 1024} КБ).  Описание на втором языке записано в {path.name}, ключ {key}.')
 print('\nВставьте этот блок в index.html (место — см. .проект/правила/ролики-портфолио.md):\n')
 print(f'''        <figure class="video {kind}">
           <div class="frame"><button type="button" class="play-btn" data-yt="{vid}" data-title="{esc(title)}" aria-label="Play video: {esc(title)}"><img src="assets/img/covers/{vid}.webp" width="{w}" height="{h}" alt="" loading="lazy" decoding="async"><span class="play" aria-hidden="true"></span></button></div>
