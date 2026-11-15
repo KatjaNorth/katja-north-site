@@ -66,9 +66,8 @@ button,input,select,textarea{font:inherit;color:inherit}
   .site-nav a{min-height:52px;padding:0;font-size:.9375rem;border-bottom:1px solid var(--line)}
   .site-nav .nav-cta{margin:14px 0 0;justify-content:center;min-height:48px}
 }
-@media (max-width:420px){
-  .brand{font-size:.6875rem;letter-spacing:.22em;gap:8px}
-  .brand img{height:26px}
+@media (max-width:520px){
+  .brand span{display:none}
 }
 
 /* ---------- Общие элементы ---------- */
