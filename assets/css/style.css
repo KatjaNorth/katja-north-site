@@ -50,9 +50,9 @@ button,input,select,textarea{font:inherit;color:inherit}
 .site-nav .nav-cta{border:1px solid var(--accent);margin-left:8px;min-height:40px;text-decoration:none!important}
 .site-nav .nav-cta:hover{background:var(--accent);color:var(--on-accent)}
 .lang{display:flex;border:1px solid var(--line)}
-.lang button{min-width:42px;min-height:40px;padding:0 8px;background:none;border:0;cursor:pointer;font-size:.75rem;font-weight:600;letter-spacing:.14em;color:var(--accent)}
-.lang button[aria-pressed="true"]{background:var(--surface);color:var(--text)}
-.lang button:hover{color:var(--text)}
+.lang a{display:flex;align-items:center;justify-content:center;min-width:42px;min-height:40px;padding:0 8px;text-decoration:none;font-size:.75rem;font-weight:600;letter-spacing:.14em;color:var(--accent)}
+.lang a[aria-current="true"]{background:var(--surface);color:var(--text)}
+.lang a:hover{color:var(--text)}
 .menu-btn{display:none;width:44px;height:44px;padding:0;background:none;border:0;cursor:pointer;flex-direction:column;justify-content:center;align-items:center;gap:6px}
 .menu-btn span{display:block;width:26px;height:2px;background:var(--text);transition:transform .25s,opacity .2s}
 .menu-btn[aria-expanded="true"] span:nth-child(1){transform:translateY(8px) rotate(45deg)}
@@ -99,6 +99,7 @@ h3{font-family:var(--display);font-weight:600;font-size:1.5rem;line-height:1.2;c
 .video figcaption strong{font-family:var(--display);font-weight:600;font-size:1.1875rem;line-height:1.25;color:var(--silver)}
 
 .group-title{margin-top:44px;padding-top:16px;border-top:1px solid var(--accent)}
+.group-note{margin-top:6px;font-size:.875rem;color:var(--accent)}
 .row-mix{display:flex;align-items:flex-start;gap:16px;margin-top:20px}
 .row-mix .wide{flex:1.7778 1 0}
 .row-mix .tall{flex:.5625 1 0}
@@ -113,13 +114,21 @@ h3{font-family:var(--display);font-weight:600;font-size:1.5rem;line-height:1.2;c
 /* ---------- Главный экран ---------- */
 .hero{min-height:100vh;min-height:100svh;display:flex;align-items:center;padding-block:calc(var(--header-h) + env(safe-area-inset-top,0px) + 20px) 32px;background:radial-gradient(70% 55% at 50% 40%,var(--bg-2) 0%,var(--bg) 75%)}
 .hero-inner{display:flex;flex-direction:column;align-items:center;text-align:center;gap:22px;width:100%}
-.hero-video{flex:none}
+.hero-video{flex:none;width:100%;display:flex;justify-content:center}
 .hero-figure .frame{height:min(52vh,560px);height:min(52svh,560px);min-height:230px;border-color:var(--accent)}
+/* ролик с автозапуском: рамка 9:16 в вертикальном положении экрана, 16:9 в горизонтальном */
+.hero-loop{border-color:var(--accent);aspect-ratio:9/16;height:min(52vh,560px);height:min(52svh,560px);min-height:230px}
+.hero-loop video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+@media (orientation:landscape){
+  .hero-loop{aspect-ratio:16/9;height:auto;min-height:0;width:min(100%,880px,calc((100vh - var(--header-h) - 290px)*16/9));width:min(100%,880px,calc((100svh - var(--header-h) - 290px)*16/9));min-width:300px}
+}
 .hero-text{display:flex;flex-direction:column;align-items:center;gap:14px}
 .hero-actions{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-top:6px}
 @media (orientation:landscape) and (max-height:560px){
   .hero-inner{flex-direction:row;justify-content:center;gap:32px;text-align:left}
   .hero-figure .frame{height:calc(100vh - var(--header-h) - 56px);height:calc(100svh - var(--header-h) - 56px);min-height:200px}
+  .hero-video{width:auto}
+  .hero-loop{width:46vw;min-width:0}
   .hero-text{align-items:flex-start;max-width:26rem}
   .hero-actions{justify-content:flex-start}
   h1{font-size:clamp(1.5rem,7vh,2.2rem)}
