@@ -189,6 +189,23 @@ h3{font-family:var(--display);font-weight:600;font-size:1.5rem;line-height:1.2;c
 }
 @media (max-width:420px){.socials a{padding:0 14px;gap:10px;letter-spacing:.12em}}
 
+.form-note{font-size:.8125rem;line-height:1.5;color:var(--accent)}
+.form-note a,.footer-inner a,.prose a:not(.btn){color:var(--silver);text-decoration:underline;text-decoration-color:var(--accent);text-underline-offset:4px}
+.form-note a:hover,.footer-inner a:hover,.prose a:not(.btn):hover{color:var(--text)}
+.footer-inner{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 24px}
+.footer-inner a{display:inline-flex;align-items:center;min-height:44px}
+
+/* ---------- Текстовая страница (политика конфиденциальности) ---------- */
+.prose-page{padding-block:calc(var(--header-h) + env(safe-area-inset-top,0px) + 48px) 72px}
+.prose{max-width:760px;display:flex;flex-direction:column;gap:14px}
+.prose h1{margin-bottom:2px}
+.prose h2{font-size:clamp(1.5rem,3vw,1.9rem);margin-top:26px}
+.prose .lead{margin-top:6px}
+.prose ul{display:flex;flex-direction:column;gap:10px;padding-left:1.2em;list-style:disc}
+.prose ul.links{overflow-wrap:anywhere}
+.prose li::marker{color:var(--accent)}
+.prose .back{margin-top:28px}
+
 .site-footer{border-top:1px solid var(--line);padding-block:24px calc(24px + env(safe-area-inset-bottom,0px));font-size:.8125rem;color:var(--accent);letter-spacing:.08em}
 
 @media (prefers-reduced-motion:reduce){
