@@ -50,12 +50,20 @@
     var b = e.target.closest('.play-btn');
     if (!b) return;
     var f = document.createElement('iframe');
-    f.src = 'https://www.youtube-nocookie.com/embed/' + b.getAttribute('data-yt') + '?autoplay=1&rel=0&playsinline=1';
+    f.src = 'https://www.youtube-nocookie.com/embed/' + b.getAttribute('data-yt') + '?autoplay=1&rel=0&playsinline=1&cc_load_policy=0&enablejsapi=1&origin=' + encodeURIComponent(location.origin);
     f.title = b.getAttribute('data-title');
     f.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
     f.allowFullscreen = true;
     f.referrerPolicy = 'strict-origin-when-cross-origin';
     b.parentNode.replaceChild(f, b);
+    // Плеер сам включал субтитры YouTube поверх вшитых в ролик: просим выключить (кнопка «CC» остаётся, зритель может включить сам)
+    var captionsOff = function () {
+      try { f.contentWindow.postMessage(JSON.stringify({ event: 'command', func: 'setOption', args: ['captions', 'track', {}], id: 1, channel: 'widget' }), '*'); } catch (err) {}
+    };
+    f.addEventListener('load', function () {
+      try { f.contentWindow.postMessage(JSON.stringify({ event: 'listening', id: 1, channel: 'widget' }), '*'); } catch (err) {}
+      [300, 1200, 3000, 6000].forEach(function (ms) { setTimeout(captionsOff, ms); });
+    });
   });
 
   /* ---------- Ролик главного экрана: автозапуск без звука, 16:9 или 9:16 по положению экрана ---------- */
