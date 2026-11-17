@@ -120,6 +120,9 @@ h3{font-family:var(--display);font-weight:600;font-size:1.5rem;line-height:1.2;c
 /* ролик с автозапуском: рамка 9:16 в вертикальном положении экрана, 16:9 в горизонтальном */
 .hero-loop{border-color:var(--accent);aspect-ratio:9/16;height:min(52vh,560px);height:min(52svh,560px);min-height:230px}
 .hero-loop video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.hero-play{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);padding:12px 26px;border-radius:999px;border:1px solid var(--silver);background:rgba(5,11,24,.72);color:var(--text);font-weight:600;font-size:1rem;line-height:1;font-family:inherit;letter-spacing:.06em;cursor:pointer;z-index:2}
+.hero-play:hover,.hero-play:focus-visible{background:var(--accent);color:var(--on-accent)}
+.hero-play[hidden]{display:none}
 @media (orientation:landscape){
   .hero-loop{aspect-ratio:16/9;height:auto;min-height:0;width:min(100%,880px,calc((100vh - var(--header-h) - 290px)*16/9));width:min(100%,880px,calc((100svh - var(--header-h) - 290px)*16/9));min-width:300px}
 }

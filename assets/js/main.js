@@ -4,11 +4,11 @@
   'use strict';
 
   var UI = {
-    en: { play: 'Play video: ', menu: 'Menu', sending: 'Sending…', ask: 'I\u2019m interested in: ',
+    en: { play: 'Play video: ', heroPlay: '\u25B6 Play', heroLabel: 'Play the showreel', menu: 'Menu', sending: 'Sending…', ask: 'I\u2019m interested in: ',
           ok: 'Thank you — your message has been sent.',
           err: 'Something went wrong. Please try again or write to me on LinkedIn.',
           req: 'Please fill in your name, a valid e-mail and a message.' },
-    da: { play: 'Afspil video: ', menu: 'Menu', sending: 'Sender…', ask: 'Jeg er interesseret i: ',
+    da: { play: 'Afspil video: ', heroPlay: '\u25B6 Afspil', heroLabel: 'Afspil showreel', menu: 'Menu', sending: 'Sender…', ask: 'Jeg er interesseret i: ',
           ok: 'Tak – din besked er sendt.',
           err: 'Noget gik galt. Prøv igen, eller skriv til mig på LinkedIn.',
           req: 'Udfyld venligst navn, en gyldig e-mail og en besked.' }
@@ -63,18 +63,33 @@
   if (loop) {
     var vid = loop.querySelector('video');
     var conn = navigator.connection || {};
+    // экономия трафика или «меньше движения»: видео не грузим, пока человек сам не нажмёт «Play»
     var still = (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) || conn.saveData === true;
+    var started = !still;                      // true — видео можно грузить и запускать
     var portrait = window.matchMedia('(orientation: portrait)');
+    var btn = document.createElement('button'); // «▶ Play»: показывается вместо автозапуска
+    btn.type = 'button'; btn.className = 'hero-play'; btn.hidden = true;
+    btn.textContent = UI[lang].heroPlay; btn.setAttribute('aria-label', UI[lang].heroLabel);
+    loop.appendChild(btn);
+    var run = function () {
+      var p = vid.play();
+      if (p && p.catch) p.catch(function () { btn.hidden = false; });   // телефон запретил автозапуск (энергосбережение)
+    };
     var pick = function () {
       var kind = portrait.matches ? 'tall' : 'wide';
       if (loop.getAttribute('data-kind') === kind) return;
       loop.setAttribute('data-kind', kind);
-      vid.poster = loop.getAttribute('data-poster-' + kind);
-      if (still) return;                       // экономия трафика или «меньше движения» — только обложка
-      vid.src = loop.getAttribute('data-' + kind);
-      var p = vid.play();
-      if (p && p.catch) p.catch(function () {});
+      vid.poster = loop.getAttribute('data-poster-' + kind);   // пока грузится — виден первый кадр
+      if (!started) { btn.hidden = false; return; }
+      vid.src = loop.getAttribute('data-' + kind);              // грузится только один файл
+      run();
     };
+    btn.addEventListener('click', function () {
+      started = true; btn.hidden = true;
+      if (!vid.getAttribute('src')) vid.src = loop.getAttribute('data-' + loop.getAttribute('data-kind'));
+      run();
+    });
+    vid.addEventListener('playing', function () { btn.hidden = true; });
     pick();
     if (portrait.addEventListener) portrait.addEventListener('change', pick);
     else if (portrait.addListener) portrait.addListener(pick);
