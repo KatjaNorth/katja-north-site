@@ -81,7 +81,7 @@
     loop.appendChild(btn);
     var run = function () {
       var p = vid.play();
-      if (p && p.catch) p.catch(function () { btn.hidden = false; });   // телефон запретил автозапуск (энергосбережение)
+      if (p && p.catch) p.catch(function () { btn.hidden = false; lift(true); });   // телефон запретил автозапуск (энергосбережение): кнопка Play и сразу текст
     };
     var pick = function () {
       var kind = portrait.matches ? 'tall' : 'wide';
@@ -100,8 +100,8 @@
     vid.addEventListener('playing', function () { btn.hidden = true; });
     // через 4 с после старта ролика (или сразу при экономии/«меньше движения») затемняем низ и показываем текст
     var heroEl = loop.closest('.hero');
-    var lift = function () { heroEl.classList.remove('intro'); };
-    if (still) lift();
+    var lift = function (quick) { if (quick === true) heroEl.classList.add('quick'); heroEl.classList.remove('intro'); };   // quick — без плавного появления
+    if (still) lift(true);
     else {
       vid.addEventListener('playing', function () { setTimeout(lift, 4000); }, { once: true });
       setTimeout(lift, 9000);                  // запасной вариант: ролик не запустился
