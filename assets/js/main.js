@@ -98,6 +98,14 @@
       run();
     });
     vid.addEventListener('playing', function () { btn.hidden = true; });
+    // через 4 с после старта ролика (или сразу при экономии/«меньше движения») затемняем низ и показываем текст
+    var heroEl = loop.closest('.hero');
+    var lift = function () { heroEl.classList.remove('intro'); };
+    if (still) lift();
+    else {
+      vid.addEventListener('playing', function () { setTimeout(lift, 4000); }, { once: true });
+      setTimeout(lift, 9000);                  // запасной вариант: ролик не запустился
+    }
     pick();
     if (portrait.addEventListener) portrait.addEventListener('change', pick);
     else if (portrait.addListener) portrait.addListener(pick);
