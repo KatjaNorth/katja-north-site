@@ -243,3 +243,30 @@ h3{font-family:var(--display);font-weight:600;font-size:1.5rem;line-height:1.2;c
   .about.is-collapsible.is-open .about-more{display:flex}
   .about.is-collapsible .about-toggle{display:inline-flex;align-items:center}
 }
+
+/* ---------- Карусель «Maria in Wonderland» ---------- */
+.row-two{align-items:start}
+.carousel-fig{align-items:flex-start}
+.carousel-fig figcaption,.car-dots{width:100%;max-width:440px}
+.carousel{position:relative;width:100%;max-width:440px}
+.car-track{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;overscroll-behavior-x:contain;scrollbar-width:none;border:1px solid var(--line);background:var(--surface)}
+.car-track::-webkit-scrollbar{display:none}
+.car-track:focus-visible{outline:2px solid var(--silver);outline-offset:2px}
+.car-slide{position:relative;flex:0 0 100%;scroll-snap-align:start;aspect-ratio:4/5;background:#f6f3ec}
+.car-slide img,.car-slide video{display:block;width:100%;height:100%;object-fit:cover}
+.car-btn{position:absolute;top:50%;width:44px;height:44px;margin-top:-22px;padding:0;border-radius:50%;border:1px solid var(--silver);background:rgba(5,11,24,.72);color:var(--text);cursor:pointer;transition:background .2s,opacity .2s}
+.car-btn::after{content:"";position:absolute;left:50%;top:50%;width:10px;height:10px;border:solid var(--text);border-width:2px 2px 0 0}
+.car-prev{left:8px}.car-prev::after{margin:-5px 0 0 -2px;transform:rotate(-135deg)}
+.car-next{right:8px}.car-next::after{margin:-5px 0 0 -8px;transform:rotate(45deg)}
+.car-btn:hover:not(:disabled),.car-btn:focus-visible{background:var(--accent)}
+.car-btn:disabled{opacity:.3;cursor:default}
+.car-dots{display:flex;justify-content:center;gap:2px;margin-top:6px}
+.car-dot{width:24px;height:24px;padding:0;border:0;background:none;cursor:pointer;position:relative}
+.car-dot::before{content:"";position:absolute;left:50%;top:50%;width:8px;height:8px;margin:-4px 0 0 -4px;border-radius:50%;background:var(--line);transition:background .2s,transform .2s}
+.car-dot[aria-current="true"]::before{background:var(--silver);transform:scale(1.3)}
+.car-play{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);padding:12px 26px;border-radius:999px;border:1px solid var(--silver);background:rgba(5,11,24,.72);color:var(--text);font-weight:600;font-size:1rem;line-height:1;font-family:inherit;letter-spacing:.06em;cursor:pointer;z-index:2}
+.car-play:hover,.car-play:focus-visible{background:var(--accent);color:var(--on-accent)}
+.car-play[hidden]{display:none}
+.car-cta{margin-top:4px}
+@media (max-width:760px) and (orientation:portrait){.carousel{max-width:none}}
+@media (hover:none){.car-btn{display:none}}

@@ -4,11 +4,11 @@
   'use strict';
 
   var UI = {
-    en: { play: 'Play video: ', more: 'Read more', less: 'Show less', heroPlay: '\u25B6 Play', heroLabel: 'Play the showreel', menu: 'Menu', sending: 'Sending…', ask: 'I\u2019m interested in: ',
+    en: { play: 'Play video: ', carLabel: 'Maria in Wonderland: New Year project, slides', prev: 'Previous slide', next: 'Next slide', slide: 'Slide ', of: ' of ', carPlay: '\u25B6 Play', more: 'Read more', less: 'Show less', heroPlay: '\u25B6 Play', heroLabel: 'Play the showreel', menu: 'Menu', sending: 'Sending…', ask: 'I\u2019m interested in: ',
           ok: 'Thank you — your message has been sent.',
           err: 'Something went wrong. Please try again or write to me on LinkedIn.',
           req: 'Please fill in your name, a valid e-mail and a message.' },
-    da: { play: 'Afspil video: ', more: 'Læs mere', less: 'Vis mindre', heroPlay: '\u25B6 Afspil', heroLabel: 'Afspil showreel', menu: 'Menu', sending: 'Sender…', ask: 'Jeg er interesseret i: ',
+    da: { play: 'Afspil video: ', carLabel: 'Maria in Wonderland: nytårsprojekt, slides', prev: 'Forrige slide', next: 'Næste slide', slide: 'Slide ', of: ' af ', carPlay: '\u25B6 Afspil', more: 'Læs mere', less: 'Vis mindre', heroPlay: '\u25B6 Afspil', heroLabel: 'Afspil showreel', menu: 'Menu', sending: 'Sender…', ask: 'Jeg er interesseret i: ',
           ok: 'Tak – din besked er sendt.',
           err: 'Noget gik galt. Prøv igen, eller skriv til mig på LinkedIn.',
           req: 'Udfyld venligst navn, en gyldig e-mail og en besked.' }
@@ -134,6 +134,69 @@
       toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
       toggle.textContent = open ? UI[lang].less : UI[lang].more;
     });
+  }
+
+  /* ---------- Карусель: слайды 4:5, видео играют только на видимом слайде ---------- */
+  var car = document.querySelector('.carousel');
+  if (car) {
+    var track = car.querySelector('.car-track'), slidesEl = [].slice.call(track.children);
+    var prev = car.querySelector('.car-prev'), next = car.querySelector('.car-next');
+    var dotsBox = document.querySelector('.car-dots'), dots = [];
+    var cinfo = navigator.connection || {};
+    var cstill = (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) || cinfo.saveData === true;
+    var cur = 0, inView = false, total = slidesEl.length;
+    car.setAttribute('aria-label', UI[lang].carLabel + ' ' + total);
+    prev.setAttribute('aria-label', UI[lang].prev); next.setAttribute('aria-label', UI[lang].next);
+    slidesEl.forEach(function (s, i) {
+      s.setAttribute('aria-label', UI[lang].slide + (i + 1) + UI[lang].of + total);
+      var d = document.createElement('button'); d.type = 'button'; d.className = 'car-dot';
+      d.setAttribute('aria-label', UI[lang].slide + (i + 1)); dotsBox.appendChild(d); dots.push(d);
+      d.addEventListener('click', function () { go(i); });
+      var v = s.querySelector('video');
+      if (v) {
+        var pb = document.createElement('button'); pb.type = 'button'; pb.className = 'car-play';
+        pb.textContent = UI[lang].carPlay; pb.hidden = true; s.appendChild(pb);
+        pb.addEventListener('click', function () { cstill = false; load(i); play(i); });
+        v.addEventListener('playing', function () { pb.hidden = true; });
+      }
+    });
+    function vid(i) { return slidesEl[i] ? slidesEl[i].querySelector('video') : null; }
+    function load(i) { var v = vid(i); if (v && !v.getAttribute('src')) { v.src = v.getAttribute('data-src'); } }
+    function play(i) {
+      var v = vid(i); if (!v) return;
+      var p = v.play(); if (p && p.catch) p.catch(function () { slidesEl[i].querySelector('.car-play').hidden = false; });
+    }
+    function show(i) {                                  // обновляет кнопки, точки и запускает видео нужного слайда
+      cur = i;
+      prev.disabled = i === 0; next.disabled = i === total - 1;
+      dots.forEach(function (d, k) { d.setAttribute('aria-current', k === i ? 'true' : 'false'); });
+      slidesEl.forEach(function (s, k) { var v = vid(k); if (v && k !== i) v.pause(); });
+      if (!inView) return;
+      load(i); load(i + 1);
+      var cv = vid(i);
+      if (cv) { if (cstill) slidesEl[i].querySelector('.car-play').hidden = false; else play(i); }
+    }
+    function go(i) {
+      i = Math.max(0, Math.min(total - 1, i));
+      track.scrollTo({ left: i * track.clientWidth, behavior: cstill ? 'auto' : 'smooth' });
+    }
+    var raf = 0;
+    track.addEventListener('scroll', function () {
+      if (raf) return;
+      raf = requestAnimationFrame(function () {
+        raf = 0; var i = Math.round(track.scrollLeft / track.clientWidth);
+        if (i !== cur) show(i);
+      });
+    }, { passive: true });
+    prev.addEventListener('click', function () { go(cur - 1); });
+    next.addEventListener('click', function () { go(cur + 1); });
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (en) {
+        inView = en[0].isIntersecting; show(cur);
+        if (!inView) slidesEl.forEach(function (s, k) { var v = vid(k); if (v) v.pause(); });
+      }, { threshold: 0.4 }).observe(car);
+    } else { inView = true; }
+    show(0);
   }
 
   /* ---------- Форма ---------- */
