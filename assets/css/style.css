@@ -141,7 +141,8 @@ h3{font-family:var(--display);font-weight:600;font-size:1.5rem;line-height:1.2;c
 /* ---------- Услуги ---------- */
 .lead{max-width:62ch;margin-top:18px;font-size:1.125rem;color:var(--text)}
 .services{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:36px}
-.services article{background:var(--surface);border:1px solid var(--line);padding:24px;display:flex;flex-direction:column;gap:10px}
+.services article{background:var(--surface);border:1px solid var(--line);display:flex;flex-direction:column;overflow:hidden}
+.card-body{display:flex;flex-direction:column;gap:10px;flex:1;padding:20px 24px 12px}
 .services p{font-size:1rem;line-height:1.55}
 .card-actions{display:flex;flex-wrap:wrap;gap:4px 22px;margin-top:auto;padding-top:6px}
 .card-link{display:inline-flex;align-items:center;min-height:44px;color:var(--silver);font-size:.75rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;text-decoration:underline;text-decoration-color:var(--accent);text-underline-offset:6px;transition:color .2s}
@@ -159,7 +160,7 @@ h3{font-family:var(--display);font-weight:600;font-size:1.5rem;line-height:1.2;c
 .about-text{display:flex;flex-direction:column;gap:16px;max-width:65ch}
 @media (max-width:760px){
   .about{grid-template-columns:minmax(0,1fr)}
-  .about-photo{max-width:320px}
+  .about-photo{max-width:240px}
 }
 @media (max-width:760px) and (orientation:landscape){
   .about{grid-template-columns:minmax(0,220px) minmax(0,1fr);gap:24px}
@@ -214,4 +215,31 @@ h3{font-family:var(--display);font-weight:600;font-size:1.5rem;line-height:1.2;c
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   *,*::before,*::after{transition:none!important}
+}
+
+/* ---------- Карточки услуг с кадром-примером ---------- */
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.card-thumb{position:relative;display:block;aspect-ratio:16/9;overflow:hidden;background:var(--bg-2)}
+.card-thumb img{width:100%;height:100%;object-fit:cover;object-position:center 30%;display:block;transition:transform .5s,opacity .3s}
+.card-thumb:hover img,.card-thumb:focus-visible img{transform:scale(1.04);opacity:.85}
+.card-thumb .play{width:48px;height:48px;margin:-24px 0 0 -24px}
+.card-thumb .play::after{left:19px;top:14px;border-width:10px 0 10px 16px}
+.card-thumb:hover .play,.card-thumb:focus-visible .play{background:var(--accent)}
+@media (max-width:560px){
+  .services article{flex-direction:row;align-items:stretch}
+  .card-thumb{flex:none;width:112px;aspect-ratio:auto}
+  .card-thumb .play{width:36px;height:36px;margin:-18px 0 0 -18px}
+  .card-thumb .play::after{left:14px;top:10px;border-width:8px 0 8px 13px}
+  .card-body{padding:16px 16px 8px}
+  .services p{font-size:.9375rem;line-height:1.5}
+}
+
+/* ---------- «Обо мне»: на телефоне середина сворачивается ---------- */
+.about-toggle{display:none;align-self:flex-start;min-height:44px;padding:0 22px;background:none;border:1px solid var(--accent);color:var(--text);font:inherit;font-size:.8125rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;cursor:pointer}
+.about-toggle:hover,.about-toggle:focus-visible{background:var(--surface);border-color:var(--text)}
+.about-more{display:flex;flex-direction:column;gap:16px}
+@media (max-width:760px){
+  .about.is-collapsible .about-more{display:none}
+  .about.is-collapsible.is-open .about-more{display:flex}
+  .about.is-collapsible .about-toggle{display:inline-flex;align-items:center}
 }

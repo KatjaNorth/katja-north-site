@@ -4,11 +4,11 @@
   'use strict';
 
   var UI = {
-    en: { play: 'Play video: ', heroPlay: '\u25B6 Play', heroLabel: 'Play the showreel', menu: 'Menu', sending: 'Sending…', ask: 'I\u2019m interested in: ',
+    en: { play: 'Play video: ', more: 'Read more', less: 'Show less', heroPlay: '\u25B6 Play', heroLabel: 'Play the showreel', menu: 'Menu', sending: 'Sending…', ask: 'I\u2019m interested in: ',
           ok: 'Thank you — your message has been sent.',
           err: 'Something went wrong. Please try again or write to me on LinkedIn.',
           req: 'Please fill in your name, a valid e-mail and a message.' },
-    da: { play: 'Afspil video: ', heroPlay: '\u25B6 Afspil', heroLabel: 'Afspil showreel', menu: 'Menu', sending: 'Sender…', ask: 'Jeg er interesseret i: ',
+    da: { play: 'Afspil video: ', more: 'Læs mere', less: 'Vis mindre', heroPlay: '\u25B6 Afspil', heroLabel: 'Afspil showreel', menu: 'Menu', sending: 'Sender…', ask: 'Jeg er interesseret i: ',
           ok: 'Tak – din besked er sendt.',
           err: 'Noget gik galt. Prøv igen, eller skriv til mig på LinkedIn.',
           req: 'Udfyld venligst navn, en gyldig e-mail og en besked.' }
@@ -106,7 +106,7 @@
   /* ---------- Карточки услуг: «пример» подсвечивает ролик, «спросить» готовит форму ---------- */
   var lastAsk = '';
   document.addEventListener('click', function (e) {
-    var a = e.target.closest('.card-link');
+    var a = e.target.closest('.card-link, .card-thumb');
     if (!a) return;
     if (a.hasAttribute('data-ask')) {
       var msg = document.getElementById('f-message');
@@ -121,6 +121,20 @@
     target.classList.add('is-target');
     setTimeout(function () { target.classList.remove('is-target'); }, 2600);
   });
+
+  /* ---------- «Обо мне»: на узком экране середина текста сворачивается ---------- */
+  var about = document.querySelector('.about');
+  var toggle = document.getElementById('about-toggle');
+  if (about && toggle) {
+    about.classList.add('is-collapsible');
+    toggle.hidden = false;
+    toggle.textContent = UI[lang].more;
+    toggle.addEventListener('click', function () {
+      var open = about.classList.toggle('is-open');
+      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      toggle.textContent = open ? UI[lang].less : UI[lang].more;
+    });
+  }
 
   /* ---------- Форма ---------- */
   var form = document.getElementById('contact-form');
