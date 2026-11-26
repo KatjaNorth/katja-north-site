@@ -243,6 +243,7 @@ h3{font-family:var(--display);font-weight:600;font-size:1.5rem;line-height:1.2;c
 
 /* ---------- Карусель «Maria in Wonderland» ---------- */
 .row-two{align-items:start}
+.row-stack{display:flex;flex-direction:column;gap:24px;min-width:0}
 .carousel-fig{align-items:flex-start}
 .carousel-fig figcaption,.car-dots{width:100%;max-width:440px}
 .carousel{position:relative;width:100%;max-width:440px}

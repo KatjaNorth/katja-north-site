@@ -33,8 +33,8 @@
  "s4.d": "Animationsfilm og fortællinger, hvor virkelige optagelser møder AI’ens magi.",
  "s5.t": "Videoer til sociale medier",
  "s5.d": "Korte, lodrette videoer til Reels, TikTok og YouTube Shorts.",
- "s6.t": "3D-visualisering",
- "s6.d": "Til projekter, der kræver fuld kontrol over scenen og præcision i hver detalje.",
+ "s6.t": "3D og motion graphics",
+ "s6.d": "3D-scener og motion graphics til projekter, der kræver fuld kontrol over hver detalje.",
  "about.eyebrow": "Om mig",
  "about.p1": "Hej, jeg hedder Jekaterina Rogaten – jeg er AI-videoskaber, bor i Danmark og arbejder under brandet Katja North.",
  "about.p2": "Med generativ AI forvandler jeg idéer til kortfilm, reklamer og indhold til sociale medier med et filmisk udtryk. Jeg står for hele processen: koncept, manuskript, storyboard, generering, speak, musik og den endelige klipning.",
@@ -95,5 +95,6 @@
  "foot.privacy": "Privatlivspolitik",
  "form.note": "Dine oplysninger bruges kun til at svare dig.",
  "privmeta.title": "Privatlivspolitik — Katja North",
- "privmeta.description": "Sådan behandler Katja Norths hjemmeside personoplysninger: kontaktformular, videoer, ingen cookies eller sporing og dine rettigheder efter databeskyttelsesforordningen."
+ "privmeta.description": "Sådan behandler Katja Norths hjemmeside personoplysninger: kontaktformular, videoer, ingen cookies eller sporing og dine rettigheder efter databeskyttelsesforordningen.",
+ "cap.n1": "Tilblivelsen af min LEGO-film: motion graphics skabt med AI og kode"
 }
