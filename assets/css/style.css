@@ -244,7 +244,7 @@ h3{font-family:var(--display);font-weight:600;font-size:1.5rem;line-height:1.2;c
 /* ---------- Карусель «Maria in Wonderland» ---------- */
 .row-two{align-items:start}
 .row-stack{display:flex;flex-direction:column;gap:24px;min-width:0}
-.carousel-fig{align-items:flex-start}
+.carousel-fig{align-items:center}
 .carousel-fig figcaption,.car-dots{width:100%;max-width:440px}
 .carousel{position:relative;width:100%;max-width:440px}
 .car-track{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;overscroll-behavior-x:contain;scrollbar-width:none;border:1px solid var(--line);background:var(--surface)}
@@ -265,6 +265,26 @@ h3{font-family:var(--display);font-weight:600;font-size:1.5rem;line-height:1.2;c
 .car-play{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);padding:12px 26px;border-radius:999px;border:1px solid var(--silver);background:rgba(5,11,24,.72);color:var(--text);font-weight:600;font-size:1rem;line-height:1;font-family:inherit;letter-spacing:.06em;cursor:pointer;z-index:2}
 .car-play:hover,.car-play:focus-visible{background:var(--accent);color:var(--on-accent)}
 .car-play[hidden]{display:none}
-.work-cta{align-self:flex-start;margin-top:4px}
+.work-cta{align-self:center;margin-top:4px}
 @media (max-width:760px) and (orientation:portrait){.carousel{max-width:none}}
 @media (hover:none){.car-btn{display:none}}
+
+/* ---------- Седьмая карточка услуг (карусель) занимает всю строку, чтобы не оставалась одна в ряду ---------- */
+.services article:last-child:nth-child(3n+1){grid-column:1/-1;flex-direction:row}
+.services article:last-child:nth-child(3n+1) .card-thumb{flex:none;width:clamp(200px,24%,280px);aspect-ratio:4/5}
+.services article:last-child:nth-child(3n+1) .card-body{justify-content:center;padding:24px 32px}
+.services article:last-child:nth-child(3n+1) .card-actions{margin-top:8px}
+.services article:last-child:nth-child(3n+1) .card-body p{max-width:56ch}
+.services article:last-child:nth-child(3n+1) h3{font-size:1.5rem}
+@media (max-width:900px){
+  .services article:last-child:nth-child(odd){grid-column:1/-1;flex-direction:row}
+  .services article:last-child:nth-child(odd) .card-thumb{flex:none;width:clamp(180px,34%,260px);aspect-ratio:4/5}
+  .services article:last-child:nth-child(odd) .card-body{justify-content:center;padding:20px 24px}
+  .services article:last-child:nth-child(odd) .card-actions{margin-top:8px}
+}
+@media (max-width:560px){
+  .services article:last-child:nth-child(odd) .card-thumb{width:112px;aspect-ratio:auto}
+  .services article:last-child:nth-child(odd) .card-body{justify-content:flex-start;padding:16px 16px 8px}
+}
+.carousel-fig.is-target .car-track{border-color:var(--text);box-shadow:0 0 0 3px var(--accent)}
+.car-track{transition:box-shadow .4s,border-color .4s}
