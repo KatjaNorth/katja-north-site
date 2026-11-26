@@ -269,22 +269,18 @@ h3{font-family:var(--display);font-weight:600;font-size:1.5rem;line-height:1.2;c
 @media (max-width:760px) and (orientation:portrait){.carousel{max-width:none}}
 @media (hover:none){.car-btn{display:none}}
 
-/* ---------- Седьмая карточка услуг (карусель) занимает всю строку, чтобы не оставалась одна в ряду ---------- */
-.services article:last-child:nth-child(3n+1){grid-column:1/-1;flex-direction:row}
-.services article:last-child:nth-child(3n+1) .card-thumb{flex:none;width:clamp(200px,24%,280px);aspect-ratio:4/5}
-.services article:last-child:nth-child(3n+1) .card-body{justify-content:center;padding:24px 32px}
-.services article:last-child:nth-child(3n+1) .card-actions{margin-top:8px}
-.services article:last-child:nth-child(3n+1) .card-body p{max-width:56ch}
-.services article:last-child:nth-child(3n+1) h3{font-size:1.5rem}
-@media (max-width:900px){
-  .services article:last-child:nth-child(odd){grid-column:1/-1;flex-direction:row}
-  .services article:last-child:nth-child(odd) .card-thumb{flex:none;width:clamp(180px,34%,260px);aspect-ratio:4/5}
-  .services article:last-child:nth-child(odd) .card-body{justify-content:center;padding:20px 24px}
-  .services article:last-child:nth-child(odd) .card-actions{margin-top:8px}
-}
-@media (max-width:560px){
-  .services article:last-child:nth-child(odd) .card-thumb{width:112px;aspect-ratio:auto}
-  .services article:last-child:nth-child(odd) .card-body{justify-content:flex-start;padding:16px 16px 8px}
-}
 .carousel-fig.is-target .car-track{border-color:var(--text);box-shadow:0 0 0 3px var(--accent)}
 .car-track{transition:box-shadow .4s,border-color .4s}
+
+/* ---------- Раздел «Процесс» ---------- */
+.process{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:32px 56px;align-items:start;margin-top:36px}
+.process-text{display:flex;flex-direction:column;gap:24px}
+.steps{list-style:none;counter-reset:st;display:flex;flex-direction:column;gap:14px;margin:0;padding:0}
+.steps li{counter-increment:st;display:grid;grid-template-columns:1.6rem minmax(0,1fr);column-gap:16px;row-gap:4px;padding-bottom:14px;border-bottom:1px solid var(--line)}
+.steps li::before{content:counter(st);grid-row:1/3;padding-top:.45em;font-size:.8125rem;font-weight:600;letter-spacing:.16em;color:var(--accent)}
+.steps strong{font-family:var(--display);font-weight:400;font-size:1.5rem;line-height:1.25;color:var(--silver)}
+.steps span{font-size:.9375rem;line-height:1.5;color:var(--accent)}
+.process-lang{font-size:1.125rem;color:var(--text)}
+.process-note{margin:0;font-size:.9375rem;color:var(--accent)}
+.process .lead{margin-top:0}
+@media (max-width:900px){.process{grid-template-columns:minmax(0,1fr)}}
